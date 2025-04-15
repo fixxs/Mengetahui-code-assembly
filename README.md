@@ -63,7 +63,37 @@
 
 ![image](https://github.com/user-attachments/assets/7242bd02-3310-48d1-9614-4c0f5a109277)
 
+* Ini akan ditrigger kalau nggak ketemu pembagi dari 2 sampai √n (alias angka tersebut cuma bisa dibagi 1 dan dirinya sendiri).
 
+* Dia akan tampilkan string “Angka prima” ke layar pake syscall Linux write.
+
+
+## ❌ Kalau ketemu pembagi → bukan prima ##
+
+
+![image](https://github.com/user-attachments/assets/f39cedf3-a617-4783-9d7e-1a8ede2488c5)
+
+# mov rax, 1 #
+* syscall write rax digunakan untuk menyimpan nomor syscall di Linux.1 adalah syscall untuk write, artinya kita ingin menulis data ke file descriptor (biasanya terminal).
+
+# mov rdi, 1 # 
+* stdout Argumen pertama syscall write adalah file descriptor: 0 → stdin (input dari keyboard) 1 → stdout (keluar ke terminal) 2 → stderr (error output)Jadi rdi = 1 artinya kita mau menulis ke terminal (stdout).
+
+# mov rsi, no #
+* alamat string "Bukan angka prima" Argumen kedua syscall write adalah alamat dari data yang ingin ditulis.
+* rsi diisi dengan alamat label no, yang isinya "Bukan angka prima".
+
+# mov rdx, noLen #
+* panjang string Argumen ketiga syscall write adalah panjang data yang ingin ditulis.
+* rdx diisi dengan panjang dari string "Bukan angka prima" yang sudah dihitung sebelumnya: 10 di akhir string adalah newline (ASCII 10), biar hasilnya rapi pas tampil di terminal.
+
+# syscall #
+Ini instruksi untuk menjalankan syscall berdasarkan nilai register:
+
+* rax = nomor syscall (1 → write)
+* rdi = file descriptor (1 → stdout)
+* rsi = alamat string
+* rdx = panjang string
 
 
 
